@@ -13,10 +13,8 @@ public class DeleteImages extends ImageCountInDirectory{
     private String pathOfDirectoryImage = "D:\\TEST\\img_align_celeba";
     public List<String[]> allRows = reader.readAll();
     private String [] line = new String[0];
-    private String [] lineFoList = new String[0];
     private int countFaceNotWithGlassesInCSV = imagesCountInCSV.getCountFaceNotWithGlassesInCSV();
     private int countOfFaceWithGlassesInCSV = imagesCountInCSV.getCountOfFaceWithGlassesInCSV();
-    private int countOfImagesInDirectory = imageCountInDirectory.showCountImagesInDirectory();
     private List<Faces> listAllFace = new ArrayList<Faces>();
     private File fileOfFaceWithNotGlasses;
 
@@ -24,7 +22,7 @@ public class DeleteImages extends ImageCountInDirectory{
     public DeleteImages() throws IOException {
     }
 
-    public int Num(String name){
+    public int findEqualsName(String name){
         for(Faces faces: listAllFace){
             if(faces.name.substring(1).equals(name)){
                 return 1;
@@ -39,7 +37,6 @@ public class DeleteImages extends ImageCountInDirectory{
 
     public void greatBalanse() {
 
-        File fileOfImage = new File(pathOfDirectoryImage);
         int count=0;
         for(int i = 0; i<allRows.size();i++){
             line = Arrays.toString(allRows.get(i)).split(", ");
@@ -53,20 +50,14 @@ public class DeleteImages extends ImageCountInDirectory{
         }
         for(int i=0; i<allRows.size();i++){
             line = Arrays.toString(allRows.get(i)).split(", ");
-            if(countFaceNotWithGlassesInCSV >= countOfFaceWithGlassesInCSV && Num(line[0].substring(1))==0  && Integer.parseInt(line[16])<0){
+            if(countFaceNotWithGlassesInCSV >= countOfFaceWithGlassesInCSV && findEqualsName(line[0].substring(1))==0  && Integer.parseInt(line[16])<0){
                 String deleteFile = pathOfDirectoryImage+"\\"+line[0].substring(1);
-                //fileOfFaceWithNotGlasses = new File("D:\\12.jpg");
-                //fileOfFaceWithNotGlasses.delete();
-                System.out.println("DELET" + " " + line[0].substring(1));
+                fileOfFaceWithNotGlasses = new File(deleteFile);
+                fileOfFaceWithNotGlasses.delete();
                 countOfImagesInDirectory--;
                 countFaceNotWithGlassesInCSV--;
             }
         }
-
-
-
-        int test1 = 0;
-        int test2 = 0;
 
         for(Faces face : listAllFace){
             try {
@@ -77,18 +68,11 @@ public class DeleteImages extends ImageCountInDirectory{
                 e.printStackTrace();
             }
 
-            if(Integer.parseInt(face.flag)>0){
-                test1++;
-            }
-            else
-                test2++;
-
         }
 
-        System.out.println(test1 + " " +test2);
-
-//        System.out.println(countOfImagesInDirectory);
+        System.out.println("GREATBALANSE DONE");
+        /*System.out.println(countOfImagesInDirectory);
         System.out.println(countOfFaceWithGlassesInCSV);
-        System.out.println(listAllFace.size());
+        System.out.println(listAllFace.size());*/
     }
 }
