@@ -4,8 +4,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        DeleteImages deleteImages = new DeleteImages();
-        deleteImages.greatBalanse();
+        /*DeleteImages deleteImages = new DeleteImages();
+        deleteImages.greatBalanse();*/
 
     }
 }
